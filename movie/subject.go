@@ -9,7 +9,7 @@ type Subject struct {
 	data []byte
 }
 
-func (sub *Subject) Title() string {
+func (sub *Subject) Name() string {
 	reg := regexp.MustCompile(`<meta property="og:title" content="(.*?)"`)
 	result := reg.FindAllSubmatch(sub.data, 1)
 	if len(result) == 0 {
@@ -81,7 +81,7 @@ func (sub *Subject) Release() string {
 	return strings.TrimSpace(string(result[0][1]))
 }
 
-func (sub *Subject) Genre() (elems []string) {
+func (sub *Subject) Genres() (elems []string) {
 	reg := regexp.MustCompile(`<span\s*property="v:genre">(.*?)</span>`)
 	result := reg.FindAllSubmatch(sub.data, -1)
 	if len(result) == 0 {
