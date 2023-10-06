@@ -58,3 +58,12 @@ func (c *Movie) LoadSubject(url string, headers map[string]string) (*Subject, er
 
 	return &Subject{data: data}, nil
 }
+
+func (c *Movie) LoadCelebrity(url string, headers map[string]string) (*Celebrity, error) {
+	data, err := c.Get(url, headers)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Celebrity{data: data}, nil
+}

@@ -10,7 +10,7 @@ type Subject struct {
 }
 
 func (sub *Subject) Title() string {
-	reg := regexp.MustCompile(`<span.*?property="v:itemreviewed">(.*?)</span>`)
+	reg := regexp.MustCompile(`<meta property="og:title" content="(.*?)"`)
 	result := reg.FindAllSubmatch(sub.data, 1)
 	if len(result) == 0 {
 		return ""
@@ -19,7 +19,16 @@ func (sub *Subject) Title() string {
 }
 
 func (sub *Subject) Poster() string {
-	reg := regexp.MustCompile(`<img.*?src="(.*?)"\stitle="点击看更多海报"\s.*?/>`)
+	reg := regexp.MustCompile(`<meta property="og:image" content="(.*?)"`)
+	result := reg.FindAllSubmatch(sub.data, 1)
+	if len(result) == 0 {
+		return ""
+	}
+	return strings.TrimSpace(string(result[0][1]))
+}
+
+func (sub *Subject) Type() string {
+	reg := regexp.MustCompile(`<meta property="og:type" content="(.*?)"`)
 	result := reg.FindAllSubmatch(sub.data, 1)
 	if len(result) == 0 {
 		return ""
@@ -33,7 +42,7 @@ func (sub *Subject) Summary() string {
 	if len(result) == 0 {
 		return ""
 	}
-	return strings.TrimSpace(string(result[0][1]))
+	return string(result[0][1])
 }
 
 func (sub *Subject) Average() string {
@@ -94,4 +103,49 @@ func (sub *Subject) Celebrities() (elems []string) {
 		elems = append(elems, string(v[1]))
 	}
 	return elems
+}
+
+func (sub *Subject) OtherNames() string {
+	reg := regexp.MustCompile(`<span.*?class="pl">又名:</span>(.*?)<br/>`)
+	result := reg.FindAllSubmatch(sub.data, 1)
+	if len(result) == 0 {
+		return ""
+	}
+	return strings.TrimSpace(string(result[0][1]))
+}
+
+func (sub *Subject) Runtime() string {
+	reg := regexp.MustCompile(`<span property="v:runtime"[\s\S]*?>(.*?)</span>`)
+	result := reg.FindAllSubmatch(sub.data, 1)
+	if len(result) == 0 {
+		return ""
+	}
+	return strings.TrimSpace(string(result[0][1]))
+}
+
+func (sub *Subject) Imdb() string {
+	reg := regexp.MustCompile(`<span class="pl">IMDb:</span>(.*?)<br`)
+	result := reg.FindAllSubmatch(sub.data, 1)
+	if len(result) == 0 {
+		return ""
+	}
+	return strings.TrimSpace(string(result[0][1]))
+}
+
+func (sub *Subject) Episode() string {
+	reg := regexp.MustCompile(`<span class="pl">集数:</span>(.*?)<br`)
+	result := reg.FindAllSubmatch(sub.data, 1)
+	if len(result) == 0 {
+		return ""
+	}
+	return strings.TrimSpace(string(result[0][1]))
+}
+
+func (sub *Subject) EpisodeRuntime() string {
+	reg := regexp.MustCompile(`<span class="pl">单集片长:</span>(.*?)<br`)
+	result := reg.FindAllSubmatch(sub.data, 1)
+	if len(result) == 0 {
+		return ""
+	}
+	return strings.TrimSpace(string(result[0][1]))
 }
