@@ -73,7 +73,7 @@ func (sub *Subject) Language() string {
 }
 
 func (sub *Subject) Release() string {
-	reg := regexp.MustCompile(`<span.*?property="v:initialReleaseDate".*?>(.*?)\(.*?\)</span>`)
+	reg := regexp.MustCompile(`<span.*?property="v:initialReleaseDate".*?>(\d{4}-\d{1,2}-\d{1,2}).*?</span>`)
 	result := reg.FindAllSubmatch(sub.data, 1)
 	if len(result) == 0 {
 		return ""

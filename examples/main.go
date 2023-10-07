@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	sub, err := movie.New().LoadSubject("https://movie.douban.com/subject/25698722/", map[string]string{})
+	sub, err := movie.New().LoadSubject("https://movie.douban.com/subject/1401118/", map[string]string{})
 	if err != nil {
 		panic(err)
 	}
