@@ -42,7 +42,7 @@ func (sub *Subject) Summary() string {
 	if len(result) == 0 {
 		return ""
 	}
-	return string(result[0][1])
+	return strings.TrimSpace(string(result[0][1]))
 }
 
 func (sub *Subject) Average() string {
